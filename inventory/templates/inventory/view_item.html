@@ -1,0 +1,683 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %} Dashboard | ONventory {% endblock %}
+
+{% block content %}
+
+{% load static %}
+
+<body>
+    <!-- Google Tag Manager (noscript)
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NKDMSK6"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+        {% block sidebar %} {% include 'inventory/sidebar.html' %} {% endblock sidebar %}
+
+        <!-- Main content -->
+    <div class="main-content" id="panel">
+        {% block topnav %} {% include 'inventory/topnav.html' %} {% endblock topnav %}
+
+
+        <!-- Header -->
+        <div class="header bg-primary pb-6">
+            <div class="container-fluid">
+                <div class="header-body">
+                    <div class="row align-items-center py-4">
+                        <div class="col-lg-6 col-7">
+                            <h6 class="h2 text-white d-inline-block mb-0">ONventory</h6>
+                            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                                    <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                                    <li class="breadcrumb-item"><a href="#">Tables</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Items</li>
+                                </ol>
+                            </nav>
+                        </div>
+                        <div class="col-lg-6 col-5 text-right">
+                            <a href="#" class="btn btn-sm btn-neutral" style="margin-bottom: 5px" id="refresh">
+                                <i class="fa fa-plus"></i> Refresh</a>
+                            {% if request.user.is_staff %}
+                                <a href="#" class="btn btn-sm btn-neutral" style="margin-bottom: 5px" data-toggle="modal" data-target="#modal-sm">
+                                    <i class="fa fa-plus"></i> Add Shop</a>
+                            {% endif %}
+                            <a href="#" class="btn btn-sm btn-neutral" style="margin-bottom: 5px" data-toggle="modal" data-target="#modal-lg">
+                                <i class="fa fa-plus"></i> Add Category</a>
+                            <a href="#" class="btn btn-sm btn-neutral" style="margin-bottom: 5px" data-toggle="modal" data-target="#modal-xl">
+                                <i class="fa fa-plus"></i> Add Item</a>
+                            <button onclick="exportTableToExcel('complex-dt',filename='Items_table')" class="btn btn-sm btn-neutral" style="margin-bottom: 5px"><i class="fa fa-file-excel"></i> Export</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Page content -->
+        <div class="container-fluid mt--6" style="min-height: 100vh;">
+            <div class="row">
+                <!-- Light table -->
+                <div class="col">
+                    <div class="card" >
+                        <!-- Card header -->
+                        <div class="card-header border-0">
+                            <h3 class="mb-0">Inventory Items</h3>
+                        </div><!-- Light table -->
+                        <div class="table-responsive">
+                            <table id="complex-dt" class="table align-items-center table-striped table-bordered nowrap">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col" >ID</th>
+                                        <th scope="col" >NAME</th>
+                                        <th scope="col" >DESCRIPTION</th>
+                                        <th scope="col" >QUANTITY</th>
+                                        <th scope="col" >PRICE</th>
+                                        <th scope="col" >VALUE</th>
+                                        <th scope="col" >REORDER LVL</th>
+                                        <th scope="col" >REORDER QTY</th>
+                                        <th scope="col">CATEGORY</th>
+                                        <th scope="col" >SHOP</th>
+                                        <th scope="col">ACTION</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="list">
+                                    {% if items %}
+                                        {% for item in items %}
+                                            <tr>
+                                                <th scope="row">
+                                                    {{item.id}}
+                                                </th>
+                                                <td class="budget">{{item.item_name}}</td>
+                                                <td>{{item.item_description}}</td>
+                                                <td>
+                                                    {{item.item_quantity}}
+                                                </td>
+                                                <td>
+                                                    {{item.unit_price}}
+                                                </td>
+                                                <td class="text-right">
+                                                    {{item.value}}
+                                                </td>
+                                                <td class="text-right">
+                                                    {{item.reorder_level}}
+                                                </td>
+                                                <td class="text-right">
+                                                    {{item.reorder_quantity}}
+                                                </td>
+                                                <td class="text-right">
+                                                    {{item.category}}
+                                                </td>
+                                                <td class="text-right">
+                                                    {{item.shop}}
+                                                </td>
+                                                <td>
+                                                    <a href="#!" data-toggle="modal" data-target="#editItemModal{{item.id}}"><i class="fa fa-edit text-green"></i></a>
+                                                    <a href="#!" data-toggle="modal" data-target="#deleteItemModal{{item.id}}"><i class="fa fa-trash text-danger"></i></a>
+                                                </td>
+                                            </tr>
+
+                                            <!-- DELETE ITEM MODAL-->
+                                            <div class="modal fade" id="deleteItemModal{{item.id}}" tabindex="-1" role="dialog" aria-labelledby="deleteItemModalLabel"
+                                                aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="deleteItemModalLabel">DELETE ITEM!!</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                                                    aria-hidden="true">&times;</span></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Are you sure you want to delete <strong>{{item.item_name | upper }}</strong> from databse?<br><br>
+                                                            You Wont be able to revert this!!
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-outline-success" data-dismiss="modal">Cancel</button>
+                                                            <a href="{% url 'delete_item' item.id %}" type="button" class="btn btn-outline-danger">Delete Item</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- ADIT ITEM MODAL -->
+                                            <div class="modal fade" id="editItemModal{{item.id}}">
+                                                <div class="modal-dialog modal-xl">
+                                                    <form id="item-edit-form" method="POST" action="{% url 'edit_item' item.id %}">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">Edit <strong>{{item.item_name | upper}}</strong></h4>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div style="padding: 5px;">
+                                                                    {% csrf_token %}
+                                                                    <div class="row">
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group">
+                                                                                <div class="form-group">
+                                                                                    <label class="form-control-label" for="shop">Shop</label>
+                                                                                    <input type="text" id="shop" name="shop" class="form-control" placeholder="Shop"
+                                                                                        list="shops" value="{{item.shop}}" disabled required>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group">
+                                                                                <div class="form-group">
+                                                                                    <label class="form-control-label" for="category">Category</label>
+                                                                                    <input type="text" id="category" name="category" class="form-control"
+                                                                                        placeholder="category.." list="categories" value="{{item.category}}"required>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="row">
+                                                                        <div class="form-group">
+                                                                            <label class="form-control-label" for="item_id">ID</label>
+                                                                            <input type="text" id="item_id" name="item_id" class="form-control"
+                                                                                placeholder="id..." value="{{item.id}}" disabled  required>
+                                                                        </div>
+
+                                                                        <div class="form-group">
+                                                                            <label class="form-control-label" for="item_name">Item Name</label>
+                                                                            <input type="text" id="item_name" name="item_name" class="form-control"
+                                                                                placeholder="Item Name..." value="{{item.item_name}}" required>
+                                                                        </div>
+
+                                                                        <div class="form-group">
+                                                                            <label class="form-control-label" for="purchase_price">Purchase Price</label>
+                                                                            <input type="text" id="purchase_price" name="purchase_price" class="form-control"
+                                                                                placeholder="Purchase Price..." value="{{item.purchase_price}}" required>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="form-control-label" for="item_price">Item Price</label>
+                                                                            <input type="text" id="item_price" name="item_price" class="form-control"
+                                                                                placeholder="Selling Price..." value="{{item.unit_price}}" required>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="form-control-label" for="quantity">Quantity</label>
+                                                                            <input type="text" id="quantity" name="quantity" class="form-control"
+                                                                                placeholder="Item Quantity..." value="{{item.item_quantity}}" required>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="form-control-label" for="reorder_level">Reorder Level</label>
+                                                                            <input type="text" id="reorder_level" name="reorder_level" class="form-control"
+                                                                                placeholder="Reorder Level..." value="{{item.reorder_level}}" required>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="form-control-label" for="reorder_quantity">Reorder Quantity</label>
+                                                                            <input type="text" id="reorder_quantity" name="reorder_quantity" class="form-control"
+                                                                                placeholder="Reorder Quantity..." value="{{item.reorder_quantity}}" required>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="form-control-label" for="location">Location</label>
+                                                                            <input type="text" id="location" name="location" class="form-control"
+                                                                                placeholder="Location..." value="{{item.location}}">
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label class="form-control-label" for="description">Description</label>
+                                                                        <textarea class="form-control" name="description" id="description" cols="5" rows="3"
+                                                                            placeholder="A short description of the item...">{{item.item_description}}</textarea>
+                                                                    </div>
+
+                                                                    <datalist id="shops">
+                                                                        {% if shops %}
+                                                                        {% for shop in shops %}
+                                                                        <option value="{{shop.shop_name}}">
+                                                                            {% endfor %}
+                                                                            {% else %}
+                                                                        <option value="Please 'first add shops">
+                                                                            {% endif %}
+                                                                    </datalist>
+                                                                    <datalist id='categories'>
+                                                                        {% if categories %}
+                                                                        {% for category in categories %}
+                                                                        <option value="{{category.category_name}}">
+                                                                            {% endfor %}
+                                                                            {% else %}
+                                                                        <option value="Please add categories first">
+                                                                            {% endif %}
+                                                                    </datalist>
+
+                                                                    <hr class="my-4">
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer justify-content-between">
+                                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                                                <button type="button" onclick="resetForm('item-form')" class="btn btn-outline-secondary">Clear
+                                                                    form</button>
+                                                                <button type="submit" class="btn btn-outline-primary"><i class="fa fa-plus"></i> Submit Changes</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    {% else %}
+                                            <p>NO ITEMS TO DISPLAY AT THE MOMENT</p>
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Card footer -->
+
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Footer -->
+        {% block footer %} {% include 'accounts/footer.html' %} {% endblock footer %}
+
+            <!-- ADD SHOP MODAL -->
+        <div class="modal fade" id="modal-sm">
+            <div class="modal-dialog modal-sm">
+                <form id="shop-form">
+                    {% csrf_token %}
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Add Shop</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                                <input class="form-control" type="text" name="shop_name" id="shop_name" placeholder="Shop Name">
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> Add Shop</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- ADD SHOP JQUERY SCRIPT -->
+                <script>
+                    var user_form = document.getElementById("shop-form");
+                    user_form.addEventListener('submit', submitHandler);
+
+                    function submitHandler(e) {
+                        e.preventDefault();
+
+                        $.ajax({
+                            type: 'POST',
+                            url: "{% url 'create_shop' %}",
+                            data: $('#shop-form').serialize(),
+                            dataType: 'json',
+                            success: function () {
+                                user_form.reset()
+                                var Toast = Swal.mixin({
+                                    toast: true,
+                                    position: 'top-end',
+                                    showConfirmButton: true,
+                                    timer: 5000
+                                });
+
+                                Toast.fire({
+                                    icon: 'success',
+                                    title: 'Shop Created.'
+                                })
+                            },
+                            error: function () {
+                                user_form.reset()
+                                var Toast = Swal.mixin({
+                                    toast: true,
+                                    position: 'top-end',
+                                    showConfirmButton: true,
+                                    timer: 5000
+                                });
+
+                                Toast.fire({
+                                    icon: 'error',
+                                    title: 'Something did not go right, please try again.'
+                                })
+                            }
+                        });
+                    }
+
+
+                </script>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+
+                <!-- ADD CATEGORY MODAL-->
+                <div class="modal fade" id="modal-lg">
+                    <div class="modal-dialog modal-lg">
+                        <form id="category-form">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Add Category</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div style="padding: 5px;">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="first_name">Category Name</label>
+                                            <input type="text" id="category_name" name="category_name" class="form-control"
+                                                placeholder="Category Name..." required>
+                                        </div>
+                                        {% if not request.user.is_employed %}
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="shop_name">Shop</label>
+                                                <input type="text" id="shop_name" name="shop_name" class="form-control" placeholder="Shop"
+                                                    list="shops" required>
+                                            </div>
+                                        {% endif %}
+                                        <datalist id="shops">
+                                            {% if shops %}
+                                            {% for shop in shops %}
+                                            <option value="{{shop.shop_name}}">
+                                                {% endfor %}
+                                                {% else %}
+                                            <option value="Please 'first add shops">
+                                                {% endif %}
+                                            </option>
+                                        </datalist>
+
+                                        <hr class="my-4">
+
+                                        <!-- ADD CATEGORY JQUERY SCRIPT -->
+                                        <script>
+                                            var user_form = document.getElementById("category-form");
+                                            user_form.addEventListener('submit', submitHandler);
+
+                                            function submitHandler(e) {
+                                                e.preventDefault();
+
+                                                $.ajax({
+                                                    type: 'POST',
+                                                    url: "{% url 'create_category' %}",
+                                                    data: $('#category-form').serialize(),
+                                                    dataType: 'json',
+                                                    success: function () {
+                                                        user_form.reset()
+                                                        var Toast = Swal.mixin({
+                                                            toast: true,
+                                                            position: 'top-end',
+                                                            showConfirmButton: true,
+                                                            timer: 5000
+                                                        });
+
+                                                        Toast.fire({
+                                                            icon: 'success',
+                                                            title: 'Successfully Added Category.'
+                                                        })
+                                                    },
+                                                    error: function () {
+                                                        user_form.reset()
+                                                        var Toast = Swal.mixin({
+                                                            toast: true,
+                                                            position: 'top-end',
+                                                            showConfirmButton: true,
+                                                            timer: 5000
+                                                        });
+
+                                                        Toast.fire({
+                                                            icon: 'error',
+                                                            title: 'Something did not go right, please try again.'
+                                                        })
+                                                    }
+                                                });
+                                            }
+                                        </script>
+                                    </div>
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-outline-primary"><i class="fa fa-plus"></i> Add Category</button>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal -->
+
+
+
+                <!-- ADD ITEM MODAL -->
+                <div class="modal fade" id="modal-xl">
+                    <div class="modal-dialog modal-xl">
+                        <form id="item-form">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Add Item</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div style="padding: 5px;">
+                                        {% csrf_token %}
+                                        <div class="row">
+                                        {% if not request.user.is_employed %}
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label" for="shop">Shop</label>
+                                                        <input type="text" id="shop" name="shop" class="form-control" placeholder="Shop" list="shops" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label" for="category">Category</label>
+                                                        <input type="text" id="category" name="category" class="form-control" placeholder="Category...." list="categories" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="item_name">Item Name</label>
+                                            <input type="text" id="item_name" name="item_name" class="form-control" placeholder="Item Name..." required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="purchase_price">Purchase Price</label>
+                                            <input type="text" id="purchase_price" name="purchase_price" class="form-control" placeholder="Purchase Price..." required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="item_price">Item Price</label>
+                                            <input type="text" id="item_price" name="item_price" class="form-control" placeholder="Selling Price..." required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="quantity">Quantity</label>
+                                            <input type="text" id="quantity" name="quantity" class="form-control" placeholder="Item Quantity..." required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="reorder_level">Reorder Level</label>
+                                            <input type="text" id="reorder_level" name="reorder_level" class="form-control" placeholder="Reorder Level..." value="10" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="reorder_quantity">Reorder Quantity</label>
+                                            <input type="text" id="reorder_quantity" name="reorder_quantity" class="form-control" placeholder="Reorder Quantity..." required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="location">Location</label>
+                                            <input type="text" id="location" name="location" class="form-control" placeholder="Location..." >
+                                        </div>
+
+                                    </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="description">Description</label>
+                                            <textarea class="form-control" name="description" id="description" cols="5"
+                                            rows="3" placeholder="A short description of the item..."></textarea>
+                                        </div>
+
+                                        <datalist id="shops">
+                                            {% if shops %}
+                                            {% for shop in shops %}
+                                            <option value="{{shop.shop_name}}">
+                                            {% endfor %}
+                                            {% else %}
+                                            <option value="Please 'first add shops">
+                                            {% endif %}
+                                        </datalist>
+                                        <datalist id='categories'>
+                                            {% if categories %}
+                                             {% for category in categories %}
+                                              <option value="{{category.category_name}}">
+                                             {% endfor %}
+                                            {% else %}
+                                               <option value="Please add categories first">
+                                            {% endif %}
+                                        </datalist>
+
+                                        <hr class="my-4">
+
+                                        <!-- ADD CATEGORY JQUERY SCRIPT -->
+                                        <script>
+                                            var item_form = document.getElementById("item-form");
+                                            item_form.addEventListener('submit', submitHandler);
+
+                                            function submitHandler(e) {
+                                                e.preventDefault();
+
+                                                $.ajax({
+                                                    type: 'POST',
+                                                    url: "{% url 'create_item' %}",
+                                                    data: $('#item-form').serialize(),
+                                                    dataType: 'json',
+                                                    success: function (data) {
+                                                        item_form.reset()
+                                                        // append new item to table
+                                                        if (data.item){
+                                                            appendToItemTable(data.item);
+                                                        }
+                                                        // sweet alert modal
+                                                        var Toast = Swal.mixin({
+                                                            toast: true,
+                                                            position: 'top-end',
+                                                            showConfirmButton: true,
+                                                            timer: 5000
+                                                        });
+
+                                                        Toast.fire({
+                                                            icon: 'success',
+                                                            title: 'Successfully Added Item.'
+                                                        })
+                                                    },
+                                                    error: function () {
+                                                        var Toast = Swal.mixin({
+                                                            toast: true,
+                                                            position: 'top-end',
+                                                            showConfirmButton: true,
+                                                            timer: 5000
+                                                        });
+
+                                                        Toast.fire({
+                                                            icon: 'error',
+                                                            title: 'Something did not go right, please try again.'
+                                                        })
+                                                    }
+                                                });
+                                            }
+                                        </script>
+                                    </div>
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                    <button type="button" onclick="resetForm('item-form')" class="btn btn-outline-secondary">Clear form</button>
+                                    <button type="submit" class="btn btn-outline-primary"><i class="fa fa-plus"></i> Add Item</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+                <script>
+                    // Append New Item to table
+                        function appendToItemTable(item) {
+                            $('#complex-dt > tbody:last-child').append(`
+                                                 <tr>
+                                                <th scope="row">
+                                                    ${item.id}
+                                                </th>
+                                                <td class="budget">${item.item_name}</td>
+                                                <td>${item.item_description}</td>
+                                                <td>
+                                                    ${item.item_quantity}
+                                                </td>
+                                                <td>
+                                                    ${item.unit_price}
+                                                </td>
+                                                <td class="text-right">
+                                                    ${item.value}
+                                                </td>
+                                                <td class="text-right">
+                                                    ${item.reorder_level}
+                                                </td>
+                                                <td class="text-right">
+                                                    ${item.reorder_quantity}
+                                                </td>
+                                                <td class="text-right">
+                                                    ${item.category}
+                                                </td>
+                                                <td class="text-right">
+                                                    ${item.shop}
+                                                </td>
+                                                <td>
+                                                    <a href=""><i class="fa fa-edit text-green"></i></a>
+                                                    <a href="#!" data-toggle="modal" data-target="#deleteItemModal${item.id}"><i class="fa fa-trash text-danger"></i></a>
+                                                </td>
+                                            </tr>
+                `);
+                        }
+                    // clear form function
+                    function resetForm(form_id){
+                        var form = document.getElementById(form_id);
+                        form.reset()
+
+                    }
+
+                    // Export data to excel
+                    function exportTableToExcel(tableID, filename = '') {
+                            var downloadLink;
+                            var dataType = 'application/vnd.ms-excel';
+                            var tableSelect = document.getElementById(tableID);
+                            var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+
+                            // Specify file name
+                            filename = filename ? filename + '.xls' : 'excel_data.xls';
+
+                            // Create download link element
+                            downloadLink = document.createElement("a");
+
+                            document.body.appendChild(downloadLink);
+
+                            if (navigator.msSaveOrOpenBlob) {
+                                var blob = new Blob(['\ufeff', tableHTML], {
+                                    type: dataType
+                                });
+                                navigator.msSaveOrOpenBlob(blob, filename);
+                            } else {
+                                // Create a link to the file
+                                downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+
+                                // Setting the file name
+                                downloadLink.download = filename;
+
+                                //triggering the function
+                                downloadLink.click();
+                            }
+                        }
+                </script>
+
+{% endblock content %}

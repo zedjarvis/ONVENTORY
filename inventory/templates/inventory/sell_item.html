@@ -1,0 +1,175 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %} Process Sales | ONventory {% endblock %}
+
+{% block content %}
+
+{% load static %}
+
+<body>
+    <!-- Google Tag Manager (noscript)
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NKDMSK6"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <!-- Sidenav -->
+    {% block sidebar %} {% include 'inventory/sidebar.html' %} {% endblock sidebar %}
+
+    <!-- Main content -->
+    <div class="main-content" id="panel">
+        <!-- Topnav -->
+        {% block topnav %} {% include 'inventory/topnav.html' %} {% endblock topnav %}
+
+
+        <!-- Header -->
+        <div class="header bg-primary pb-6">
+            <div class="container-fluid">
+                <div class="header-body">
+                    <div class="row align-items-center py-4">
+                        <div class="col-lg-6 col-7">
+                            <h6 class="h2 text-white d-inline-block mb-0">ONventory</h6>
+                            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                                    <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                                    <li class="breadcrumb-item"><a href="#">Cashier</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">process sales</li>
+                                </ol>
+                            </nav>
+                        </div>
+                        <div class="col-lg-6 col-5 text-right"><a href="#" class="btn btn-sm btn-neutral">New</a> <a
+                                href="#" class="btn btn-sm btn-neutral">Filters</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page content -->
+        <div class="container-fluid mt--6">
+            <div class="row">
+                <div class="col">
+                    <div class="card border-0">
+                        <div class="card card-success card-outline">
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    <i class="fas fa-edit"></i>
+                                    SweetAlert2 Examples
+                                </h3>
+                            </div>
+                            <div class="card-body">
+                                <button type="button" class="btn btn-success swalDefaultSuccess">
+                                    Launch Success Toast
+                                </button>
+                                <button type="button" class="btn btn-info swalDefaultInfo">
+                                    Launch Info Toast
+                                </button>
+                                <button type="button" class="btn btn-danger swalDefaultError">
+                                    Launch Error Toast
+                                </button>
+                                <button type="button" class="btn btn-warning swalDefaultWarning">
+                                    Launch Warning Toast
+                                </button>
+                                <button type="button" class="btn btn-default swalDefaultQuestion">
+                                    Launch Question Toast
+                                </button>
+                                <div class="text-muted mt-3">
+                                    For more examples look at <a href="https://sweetalert2.github.io/">https://sweetalert2.github.io/</a>
+                                </div>
+                            </div>
+                            <!-- /.card -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="card border-0">
+                        <br />
+                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-sm">
+                            Launch Small Modal
+                        </button>
+                        <hr>
+                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-lg">
+                            Launch Large Modal
+                        </button>
+                        <hr>
+                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-xl">
+                            Launch Extra Large Modal
+                        </button>
+                        <br />
+                    </div>
+                </div>
+            </div>
+
+                <div class="modal fade" id="modal-sm">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Small Modal</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>One fine body&hellip;</p>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal -->
+
+                <div class="modal fade" id="modal-lg">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Large Modal</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>One fine body&hellip;</p>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal -->
+
+                <div class="modal fade" id="modal-xl">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Extra Large Modal</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>One fine body&hellip;</p>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal -->
+
+
+            <!-- Footer -->
+        {% block footer %} {% include 'accounts/footer.html' %} {% endblock footer %}
+
+{% endblock content %}

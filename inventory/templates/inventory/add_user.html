@@ -1,0 +1,254 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %} Add User | ONventory {% endblock %}
+
+{% block content %}
+
+{% load static %}
+
+<body>
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NKDMSK6"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <!-- Sidenav -->
+    {% block sidebar %} {% include 'inventory/sidebar.html' %} {% endblock sidebar %}
+
+    <!-- Main content -->
+    <div class="main-content" id="panel">
+
+        <!-- Topnav -->
+        {% block topnav %} {% include 'inventory/topnav.html' %} {% endblock topnav %}
+
+        <!-- Header -->
+        <div class="header bg-primary pb-6">
+            <div class="container-fluid">
+                <div class="header-body">
+                    <div class="row align-items-center py-4">
+                        <div class="col-lg-6 col-7">
+                            <h6 class="h2 text-white d-inline-block mb-0">ONventory</h6>
+                            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                                    <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                                    <li class="breadcrumb-item"><a href="#">Authentication</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Add Users</li>
+                                </ol>
+                            </nav>
+                        </div>
+                        <div class="col-lg-6 col-5 text-right">
+                            <a href="#" class="btn btn-sm btn-neutral" id="refresh">
+                                <i class="fa fa-pulse"></i> Refresh
+                            </a>
+                            <a href="#" class="btn btn-sm btn-neutral" data-toggle="modal" data-target="#modal-lg">
+                                <i class="fa fa-plus"></i> Add User
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page content -->
+        <div class="container-fluid mt--6" style="min-height: 100vh;">
+            <div class="row">
+                <div class="col">
+                    <div class="card border-0">
+                    <div class="table-responsive">
+                        <table id="complex-dt" class="table align-items-center table-striped table-bordered nowrap">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">FIRST NAME</th>
+                                    <th scope="col">LAST NAME</th>
+                                    <th scope="col">EMAIL</th>
+                                    <th scope="col">SHOP</th>
+                                    <th scope="col">ACTION</th>
+                                </tr>
+                            </thead>
+                            <tbody class="list">
+                                <!-- POPULATE TABLE WITH USERS -->
+                                {% if users %}
+                                {% for user in users %}
+                                <tr>
+                                    <th scope="row">
+                                        {{user.id}}
+                                    </th>
+                                    <td class="budget">{{user.user.first_name}}</td>
+                                    <td>{{user.user.last_name}}</td>
+                                    <td>
+                                        {{user.user.email}}
+                                    </td>
+                                    <td>
+                                        {{user.shop}}
+                                    </td>
+                                    <td>
+                                        <a href="#!" onclick="deleteEmployee(user.id)"><i class="fa fa-edit text-green"></i></a>
+                                        <a href="#!" data-toggle="modal" data-target="#deleteUserModal{{user.id}}"><i class="fa fa-trash text-danger"></i></a>
+                                    </td>
+                                </tr>
+                                <!-- DELETE USER MODAL-->
+                                <div class="modal fade" id="deleteUserModal{{user.id}}" tabindex="-1" role="dialog"
+                                    aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="deleteUserModalLabel">DELETE USER!!</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                                        aria-hidden="true">&times;</span></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Are you sure you want to delete <strong>{{user.user.first_name | upper }}</strong> from databse?<br>
+                                                You Wont be able to revert this!
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                <a href="{% url 'delete_employee' user.id %}" id="delete-user" class="btn btn-primary text-white">Delete User</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                {% else %}
+                                <p>NO USERS TO DISPLAY AT THE MOMENT</p>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ADD USER MODAL-->
+        <div class="modal fade" id="modal-lg">
+            <div class="modal-dialog modal-lg">
+                <form id="user-form">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Add User</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div style="padding: 5px;">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="first_name">First Name</label>
+                                        <input type="text" id="first_name" name="first_name" class="form-control" placeholder="First Name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="last_name">Last Name</label>
+                                        <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Last Name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="email">Email address</label>
+                                        <input type="email" id="email" name="email" class="form-control" placeholder="Email" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="shop">Shop</label>
+                                        <input type="text" id="shop" name="shop" class="form-control" placeholder="Shop" list="shops" required>
+                                    </div>
+                                    <datalist id="shops">
+                                    {% if shops %}
+                                        {% for shop in shops %}
+                                          <option value="{{shop.shop_name}}">
+                                        {% endfor %}
+                                    {% else %}
+                                        <option value="Please 'first add shops">
+                                    {% endif %}
+                                        </option>
+                                    </datalist>
+
+                                    <hr class="my-4">
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-outline-primary">Add User</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- ADD USER JQUERY SCRIPT -->
+        <script>
+            // get user add form and hook a submint event listener
+                var user_form = document.getElementById("user-form");
+                user_form.addEventListener('submit', submitHandler);
+
+                // Create user Ajax function
+                function submitHandler(e) {
+                    e.preventDefault();
+
+                    $.ajax({
+                        type: 'POST',
+                        url: "{% url 'create_user' %}",
+                        data: $('#user-form').serialize(),
+                        dataType: 'json',
+                        success: function (data) {
+                            user_form.reset()
+                            if (data.user) {
+                                appendToUserTable(data.user);
+                            }
+                            // sweet alert modal
+                            var Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 5000
+                            });
+
+                            Toast.fire({
+                                icon: 'success',
+                                title: `Successfully Added <strong>${data.user.first_name}</strong> under your account.`
+                            })
+                        },
+                        error: function () {
+                            user_form.reset()
+                            var Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: true,
+                                timer: 5000
+                            });
+
+                            Toast.fire({
+                                icon: 'error',
+                                title: 'Something did not go right, please try again.'
+                            })
+                        }
+                    });
+                }
+
+
+            // Append New user to table
+            function appendToUserTable(user) {
+                $('#complex-dt > tbody:last-child').append(`
+                                                <tr>
+                                                   <th scope="row">
+                                                       ${user.id}
+                                                   </th>
+                                                   <td class="budget">${user.first_name}</td>
+                                                   <td>${user.last_name}</td>
+                                                   <td>
+                                                       ${user.email}
+                                                   </td>
+                                                   <td>
+                                                       ${user.shop}
+                                                   </td>
+                                                   <td>
+                                                       <a href="#!" class="edit-user" id="edit-user-${user.id}"><i class="fa fa-edit text-green"></i></a>
+                                                       <a href="#!" data-toggle="modal" data-target="#deleteUserModal${user.id}"><i class="fa fa-trash text-danger"></i></a>
+                                                   </td>
+                                                </tr>
+                `);
+            }
+        </script>
+            <!-- Footer -->
+            {% block footer %} {% include 'accounts/footer.html' %} {% endblock footer %}
+
+            {% endblock content %}

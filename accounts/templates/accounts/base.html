@@ -1,0 +1,149 @@
+{% load static %}
+<!--
+
+=========================================================
+* Impact Design System - v1.0.0
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/impact-design-system
+* Copyright 2010 Creative Tim (https://www.creative-tim.com)
+* Licensed under MIT (https://github.com/creativetimofficial/impact-design-system/blob/master/LICENSE.md)
+
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+-->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <meta name="description" content="Inventory Management System on the go">
+    <meta name="author" content="onventory">
+
+    <title>{% block title %} {% endblock title %}</title>
+
+    <!-- Canonical SEO -->
+    <link rel="canonical" href="#">
+    <!--  Social tags      -->
+    <meta name="keywords"
+        content="onventory, inventory management system, online inventory system, onventory,  login, form, table, tables, calendar, card, cards, navbar, modal, icons, icons, map, chat, carousel, menu, datepicker, gallery, slider, date, sidebar, social, dropdown, search, tab, nav, footer, date picker, forms, tabs, time, button, select, input, timeline, cart, car, fullcalendar, about us, invoice, account, chat, log in, blog, profile, portfolio, landing page, ecommerce, shop, landing, register, app, contact, one page, sign up, signup, store, bootstrap 4, bootstrap4, dashboard, bootstrap 4 dashboard, bootstrap 4 design, bootstrap 4 system, bootstrap 4, bootstrap 4 uit kit, bootstrap 4 kit, impact, impact ui kit, creative tim, html kit, html css template, web template, bootstrap, bootstrap 4, css3 template, frontend, responsive bootstrap template, bootstrap ui kit, responsive ui kit, impact dashboard">
+    <meta name="description"
+        content="Kick-Start Your Development With An Awesome Design System carefully designed for your online business showcase. It comes as a complete solution, with front pages and dashboard pages included.">
+    <!-- Schema.org markup for Google+ -->
+    <meta itemprop="name" content="ONventory inventory management system by roll technologies">
+    <meta itemprop="description"
+        content="Kick-Start Your Development With An Awesome Design System carefully designed for your online business showcase. It comes as a complete solution, with front pages and dashboard pages included.">
+    <meta itemprop="image"
+        content="https://s3.amazonaws.com/creativetim_bucket/products/296/original/opt_impact_thumbnail.jpg">
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="product">
+    <meta name="twitter:site" content="@creativetim">
+    <meta name="twitter:title" content="Impact Design System by Creative Tim">
+    <meta name="twitter:description"
+        content="Kick-Start Your Development With An Awesome Design System carefully designed for your online business showcase. It comes as a complete solution, with front pages and dashboard pages included.">
+    <meta name="twitter:creator" content="@creativetim">
+    <meta name="twitter:image"
+        content="https://s3.amazonaws.com/creativetim_bucket/products/296/original/opt_impact_thumbnail.jpg">
+    <!-- Open Graph data -->
+    <meta property="fb:app_id" content="655968634437471">
+    <meta property="og:title" content="Impact Design System by Creative Tim">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://demos.creative-tim.com/impact-design-system/">
+    <meta property="og:image"
+        content="https://s3.amazonaws.com/creativetim_bucket/products/296/original/opt_impact_thumbnail.jpg">
+    <meta property="og:description"
+        content="Kick-Start Your Development With An Awesome Design System carefully designed for your online business showcase. It comes as a complete solution, with front pages and dashboard pages included.">
+    <meta property="og:site_name" content="Creative Tim">
+
+    <!-- Favicon -->
+    <link rel="icon" href="../../assets/img/brand/favicon.png" type="image/png">
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+    <!-- Icons -->
+    <link rel="stylesheet" href="{% static 'accounts/plugins/nucleo/css/nucleo.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'accounts/plugins/@fortawesome/fontawesome-free/css/all.min.css' %}"
+        type="text/css">
+    <!-- Page plugins -->
+    <link rel="stylesheet" href="{% static 'accounts/plugins/fullcalendar/dist/fullcalendar.min.css' %}">
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="{% static 'accounts/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css' %}">
+    <!-- Argon CSS -->
+    <link rel="stylesheet" href="{% static 'accounts/css/dashboard.css' %}" type="text/css">
+    <!-- Data Tables -->
+
+
+</head>
+
+{% block content %} {% endblock content %}
+
+    <!--   LOGUT MODAL -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="logoutModalLabel">LOGOUT</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    Why so soon! Are you sure you would like to logout of the system?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger"  data-dismiss="modal">Cancel</button>
+                    <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Core -->
+    <script src="{% static 'accounts/js/jquery-3.3.1.min.js' %}"></script>
+
+    <script src="{% static 'accounts/plugins/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'accounts/plugins/js-cookie/js.cookie.js' %}"></script>
+    <script src="{% static 'accounts/plugins/jquery.scrollbar/jquery.scrollbar.min.js' %}"></script>
+    <script src="{% static 'accounts/plugins/jquery-scroll-lock/dist/jquery-scrollLock.min.js' %}"></script>
+    <!-- Optional JS -->
+    <script src="{% static 'accounts/plugins/chart.js/dist/Chart.min.js' %}"></script>
+    <script src="{% static 'accounts/plugins/chart.js/dist/Chart.extension.js' %}"></script>
+    <!-- SweetAlert2 -->
+    <script src="{% static 'accounts/plugins/sweetalert2/sweetalert2.min.js' %}"></script>
+    <!-- Data Tables js -->
+    <script src="{% static 'accounts/plugins/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'accounts/plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'accounts/js/datatables.js' %}"></script>
+
+    <!-- Argon JS -->
+    <script src="{% static 'accounts/js/dashboard.js' %}"></script>
+
+    <script>
+        var refresh_button = document.getElementById("refresh");
+
+        refresh_button.addEventListener('click', function(){
+            document.location.reload(true)
+        })
+    </script>
+
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+    <script>
+        (function (b, o, i, l, e, r) {
+            b.GoogleAnalyticsObject = l; b[l] || (b[l] =
+                function () { (b[l].q = b[l].q || []).push(arguments) }); b[l].l = +new Date;
+            e = o.createElement(i); r = o.getElementsByTagName(i)[0];
+            e.src = 'https://www.google-analytics.com/analytics.js';
+            r.parentNode.insertBefore(e, r)
+        }(window, document, 'script', 'ga'));
+        ga('create', 'UA-XXXXX-X', 'auto'); ga('send', 'pageview');
+    </script>
+</body>
+
+</html>
