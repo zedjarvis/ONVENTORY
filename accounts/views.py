@@ -55,7 +55,7 @@ def loginPage(request):
                 # profile has not been updated redirect to profile update page
                 # if user account is free redirect to inventory
                 # else redirect to dashboard
-                return redirect('dashboard')
+                return redirect('profile')
             else:
                 messages.error(request,
                                'Username or password is incorrect!')

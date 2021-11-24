@@ -182,8 +182,6 @@ class EditItem(View):
         else:
             return redirect('view')
 
-
-
 # Delete employee ajax view
 def delete_employee(request, id):
     employee = Employee.objects.get(pk=id, employer=request.user)
