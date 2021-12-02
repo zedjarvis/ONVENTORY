@@ -42,7 +42,7 @@ def handler403(request, exception=None):
     return response
 
 
-def handler404(request, exception):
+def handler404(request, exception=None):
     response = render(request, "productpage/error/404.html", {})
     return response
 

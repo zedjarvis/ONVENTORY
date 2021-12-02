@@ -1,0 +1,162 @@
+@font-face {
+    font-family: 'Mazzard H';
+    src: url("MazzardH-Black.9b2482c6d044.woff2") format('woff2'),
+        url("MazzardH-Black.4e66a3328c75.woff") format('woff');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Mazzard H';
+    src: url("MazzardH-Bold.77825b96fc04.woff2") format('woff2'),
+        url("MazzardH-Bold.ecda1c5dbf4c.woff") format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Mazzard H';
+    src: url("MazzardH-BlackItalic.4540a2ee8566.woff2") format('woff2'),
+        url("MazzardH-BlackItalic.f2d9931da68a.woff") format('woff');
+    font-weight: 900;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Mazzard H';
+    src: url("MazzardH-ExtraLightItalic.5ab613ab6430.woff2") format('woff2'),
+        url("MazzardH-ExtraLightItalic.28ff6e7eeedb.woff") format('woff');
+    font-weight: 200;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Mazzard H';
+    src: url("MazzardH-Italic.af43210586ef.woff2") format('woff2'),
+        url("MazzardH-Italic.82bf2dafa2d4.woff") format('woff');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Mazzard H';
+    src: url("MazzardH-ExtraBold.9c0d3158e11c.woff2") format('woff2'),
+        url("MazzardH-ExtraBold.307cf82cfce4.woff") format('woff');
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Mazzard H';
+    src: url("MazzardH-ExtraBoldItalic.dbb3e656a724.woff2") format('woff2'),
+        url("MazzardH-ExtraBoldItalic.98b858802946.woff") format('woff');
+    font-weight: 800;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Mazzard H';
+    src: url("MazzardH-BoldItalic.7294be1888c6.woff2") format('woff2'),
+        url("MazzardH-BoldItalic.3cb47ba73064.woff") format('woff');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Mazzard H';
+    src: url("MazzardH-ExtraLight.8b72d12123af.woff2") format('woff2'),
+        url("MazzardH-ExtraLight.ab85663c486e.woff") format('woff');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Mazzard H';
+    src: url("MazzardH-Medium.e20eff2610bd.woff2") format('woff2'),
+        url("MazzardH-Medium.3158cce95949.woff") format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Mazzard H';
+    src: url("MazzardH-Light.9870f0b4d0f2.woff2") format('woff2'),
+        url("MazzardH-Light.baf01ffbea04.woff") format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Mazzard H';
+    src: url("MazzardH-Regular.fef954001cef.woff2") format('woff2'),
+        url("MazzardH-Regular.a70ab9ed22fe.woff") format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Mazzard H';
+    src: url("MazzardH-MediumItalic.22fd10bfa2e0.woff2") format('woff2'),
+        url("MazzardH-MediumItalic.3810db2344bc.woff") format('woff');
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Mazzard H';
+    src: url("MazzardH-SemiBold.8f1e2e67248e.woff2") format('woff2'),
+        url("MazzardH-SemiBold.3494fd2a9b3a.woff") format('woff');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Mazzard H';
+    src: url("MazzardH-LightItalic.c4afc80446f5.woff2") format('woff2'),
+        url("MazzardH-LightItalic.6f8ab2c9c1f2.woff") format('woff');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Mazzard H';
+    src: url("MazzardH-SemiBoldItalic.44dacb7ce4f7.woff2") format('woff2'),
+        url("MazzardH-SemiBoldItalic.38ca1f35de59.woff") format('woff');
+    font-weight: 600;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Mazzard H';
+    src: url("MazzardH-Thin.36abbff7af1c.woff2") format('woff2'),
+        url("MazzardH-Thin.d00e720a6429.woff") format('woff');
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Mazzard H';
+    src: url("MazzardH-ThinItalic.67aaab5c5de1.woff2") format('woff2'),
+        url("MazzardH-ThinItalic.e05af58d69f5.woff") format('woff');
+    font-weight: 100;
+    font-style: italic;
+    font-display: swap;
+}
+

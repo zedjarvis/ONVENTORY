@@ -117,7 +117,7 @@ class CreateItem(View):
 
         item = Item(item_name=item_name, item_description=item_description,
                     item_quantity=item_quantity, unit_price=unit_price,
-                    value=value, purchace_price=purchase_price,
+                    value=value, purchase_price=purchase_price,
                     reorder_level=reorder_level,
                     reorder_quantity=reoder_quantity,
                     location=location, category=category, shop=shop)
@@ -129,7 +129,7 @@ class CreateItem(View):
                 'item_quantity': item.item_quantity,
                 'unit_price': item.unit_price,
                 'value': item.value,
-                'purchase_price': item.purchace_price,
+                'purchase_price': item.purchase_price,
                 'reorder_level': item.reorder_level,
                 'reorder_quantity': item.reorder_quantity,
                 'location': item.location,
@@ -141,6 +141,7 @@ class CreateItem(View):
 
 class EditItem(View):
     def post(self, request, id):
+        shop_name = request.POST.get('shop')
         item_name = request.POST.get('item_name')
         item_description = request.POST.get('description')
         item_quantity = request.POST.get('quantity')
@@ -150,7 +151,6 @@ class EditItem(View):
         reorder_quantity = request.POST.get('reorder_quantity')
         location = request.POST.get('location')
         category_name = request.POST.get('category')
-        shop_name = request.POST.get('shop')
 
         # getting item value from price and quantity
         value = float(item_quantity) * float(unit_price)
@@ -181,6 +181,7 @@ class EditItem(View):
             return redirect('employee_view')
         else:
             return redirect('view')
+
 
 # Delete employee ajax view
 def delete_employee(request, id):

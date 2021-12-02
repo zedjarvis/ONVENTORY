@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title> ONventory | Product Page </title>
-  <!--<link rel="shortcut icon" href="{% static 'productpage/image/favicon.png' %}" type="image/x-icon">-->
+  <link rel="shortcut icon" href="{% static 'productpage/image/favicon.ico' %}" type="image/x-icon">
   <!-- Bootstrap , fonts & icons  -->
   <link rel="stylesheet" href="{% static 'productpage/css/bootstrap.css' %}">
   <link rel="stylesheet" href="{% static 'productpage/fonts/icon-font/css/style.css' %}">
@@ -39,8 +39,8 @@
         <nav class="navbar site-navbar">
           <!-- Brand Logo-->
           <div class="brand-logo">
-            <a href="">
-              <h4 class="text-white"><i class="fa fa-layer-group" style="color: #0A48B3"></i> onventory</h4>
+            <a href="" style="text-decoration: none;">
+              <h4 class="text-white"><i class="fa fa-layer-group" style="color: #0A48B3;"></i> onventory</h4>
 
             </a>
           </div>
@@ -83,13 +83,14 @@
             </nav>
           </div>
           <div class="header-btns  header-btn-l-17 ms-auto d-none d-xs-inline-flex align-items-center">
-            <a class="btn sign-in-btn focus-reset" href="{% url 'login' %}" target="_blank">
+            <a class="btn sign-in-btn focus-reset" href="#">
               Sign in
             </a>
-            <a class="start-trail-btn btn focus-reset" href="{% url 'register' %}" target="_blank">
+            <a class="start-trail-btn btn focus-reset" style="background: #0A48B3;" href="#">
               Start free trial
             </a>
           </div>
+
           <!-- mobile menu trigger -->
           <div class="mobile-menu-trigger">
             <span></span>
@@ -108,7 +109,7 @@
               <h1 class="typed" id="typed">Manage your Bussiness, faster.</h1>
               <span class="typed-cursor" id="typed-cursor">|</span>
               <p>gain access to your business insights and progress from anywhere, anytime.</p>
-              <a href="#pricing" class="btn text-white">Get started</a>
+              <a href="#pricing" style="background: #0A48B3;" class="btn text-white">Get started</a>
             </div>
           </div>
           <div class="col-xl-8 col-lg-9 order-lg-1 order-0">
@@ -409,9 +410,9 @@
               <hr class="divider"
                 style="height: 0.2rem; max-width: 3.25rem; margin: 1.5rem auto; background-color: #0A48B3; opacity: 1;" />
               <a class="btn btn-light btn-xl"
-              style="margin: 5PX; padding: 1.25rem 2.25rem; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; border: none; border-radius: 10rem;" href="{% url 'register' %}">Sign-Up</a>
+              style="margin: 5PX; padding: 1.25rem 2.25rem; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; border: none; border-radius: 10rem;" href="{% url 'register' %}" target="_blank">Sign-Up</a>
               <a class="btn btn-dark btn-xl"
-              style="margin: 5PX; padding: 1.25rem 2.25rem; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; border: none; border-radius: 10rem;" href="{% url 'login' %}">Login</a>
+              style="margin: 5PX; padding: 1.25rem 2.25rem; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; border: none; border-radius: 10rem;" href="{% url 'login' %}" target="_blank">Login</a>
             </div>
           </section>
           <!-- Contact-->

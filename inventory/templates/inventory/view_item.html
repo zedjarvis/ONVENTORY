@@ -157,7 +157,7 @@
                                                                                 <div class="form-group">
                                                                                     <label class="form-control-label" for="shop">Shop</label>
                                                                                     <input type="text" id="shop" name="shop" class="form-control" placeholder="Shop"
-                                                                                        list="shops" value="{{item.shop}}" disabled required>
+                                                                                    value="{{item.shop}}"required>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -223,26 +223,6 @@
                                                                         <textarea class="form-control" name="description" id="description" cols="5" rows="3"
                                                                             placeholder="A short description of the item...">{{item.item_description}}</textarea>
                                                                     </div>
-
-                                                                    <datalist id="shops">
-                                                                        {% if shops %}
-                                                                        {% for shop in shops %}
-                                                                        <option value="{{shop.shop_name}}">
-                                                                            {% endfor %}
-                                                                            {% else %}
-                                                                        <option value="Please 'first add shops">
-                                                                            {% endif %}
-                                                                    </datalist>
-                                                                    <datalist id='categories'>
-                                                                        {% if categories %}
-                                                                        {% for category in categories %}
-                                                                        <option value="{{category.category_name}}">
-                                                                            {% endfor %}
-                                                                            {% else %}
-                                                                        <option value="Please add categories first">
-                                                                            {% endif %}
-                                                                    </datalist>
-
                                                                     <hr class="my-4">
                                                                 </div>
                                                             </div>
@@ -541,7 +521,7 @@
 
                                         <hr class="my-4">
 
-                                        <!-- ADD CATEGORY JQUERY SCRIPT -->
+                                        <!-- ADD ITEM JQUERY SCRIPT -->
                                         <script>
                                             var item_form = document.getElementById("item-form");
                                             item_form.addEventListener('submit', submitHandler);
