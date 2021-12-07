@@ -17,16 +17,19 @@ def registerPage(request):
         if request.method == 'POST':
             form = CreateUserForm(request.POST or None)
             if form.is_valid():
-                new = form.save(commit=False)
-                new.save()
-                user = form.cleaned_data.get("username")
+                user = form.save(commit=False)
+                user.save()
+                user_name = form.cleaned_data.get("username")
                 messages.success(request,
-                                 user.upper() + ', account created!,\
-                                     confirm your email inbox for the account \
-                                         activation Link.')
+                                 user_name.upper() + ', account created!, confirm your email inbox for the account activation Link.',
+                                 extra_tags='alert-success')
                 # send new user to login page
-                # TO DO: send a verificatio email
+                # TO DO: send a verification email
                 return redirect('register')
+
+            else:
+                return render(request,
+                              'accounts/register.html', {'form': form})
 
     context = {'form': form}
 

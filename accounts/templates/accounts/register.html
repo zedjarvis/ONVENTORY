@@ -145,11 +145,14 @@
                             </div>
                         </div>
                         {% if messages %}
-                            {% for message in messages %}
-                                <div class="alert-success" style="margin: 5px; padding: 10px">
+                            <ul class="messages" style="text-decoration: none;">
+                                {% for message in messages %}
+                                <li class="{{ message.tags }}" style="margin: 5px; padding: 10px">
                                     {{message}}
-                                </div>
-                            {% endfor %}
+                                </li>
+                                {% endfor %}
+                            </ul>
+
                         {% endif %}
                         <div class="card-body px-lg-5 py-lg-5">
                             <div class="text-center text-muted mb-4">
@@ -171,7 +174,13 @@
                                         </div>
                                         {{form.username}}
                                     </div>
+                                    {% if form.username.errors %}
+                                    <ul class="alert-danger" style="margin: 2px; padding: 2px; text-decoration: none; border-radius: 3px">
+                                        <li>{{form.username.errors}}</li>
+                                    </ul>
+                                    {% endif %}
                                 </div>
+
                                 <div class="form-group">
                                     <div class="input-group input-group-merge input-group-alternative mb-3">
                                         <div class="input-group-prepend">
@@ -181,7 +190,13 @@
                                         </div>
                                         {{form.email}}
                                     </div>
+                                    {% if form.email.errors %}
+                                    <ul class="alert-danger" style="margin: 2px; padding: 2px; text-decoration: none; border-radius: 3px">
+                                        <li>{{form.email.errors}}</li>
+                                    </ul>
+                                    {% endif %}
                                 </div>
+
                                 <div class="form-group">
                                     <div class="input-group input-group-merge input-group-alternative">
                                         <div class="input-group-prepend">
@@ -201,7 +216,13 @@
                                         </div>
                                         {{form.password2}}
                                     </div>
+                                    {% if form.password2.errors %}
+                                    <ul class="alert-danger" style="margin: 2px; padding: 2px; text-decoration: none; border-radius: 3px">
+                                        <li>{{form.password2.errors}}</li>
+                                    </ul>
+                                    {% endif %}
                                 </div>
+
                                 <div class="text-muted font-italic">
                                     <small>password strength:
                                         <span class="text-success font-weight-700">strong</span>
@@ -220,11 +241,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                {% if form.errors %}
-                                    <div class="alert-danger">
-                                        {{form.errors}}
-                                    </div>
-                                {% endif %}
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-primary mt-4">Create account</button>
                                 </div>

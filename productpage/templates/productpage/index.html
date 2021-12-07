@@ -10,6 +10,7 @@
   <title> ONventory | Product Page </title>
   <link rel="shortcut icon" href="{% static 'productpage/image/favicon.ico' %}" type="image/x-icon">
   <!-- Bootstrap , fonts & icons  -->
+  <link rel="stylesheet" href="{% static 'productpage/css/animate.css' %}">
   <link rel="stylesheet" href="{% static 'productpage/css/bootstrap.css' %}">
   <link rel="stylesheet" href="{% static 'productpage/fonts/icon-font/css/style.css' %}">
   <link rel="stylesheet" href="{% static 'productpage/fonts/typography-font/typo.css' %}">
@@ -106,8 +107,8 @@
         <div class="row position-relative justify-content-center">
           <div class="col-xxl-6 col-xl-7 col-lg-8 col-md-11 order-lg-1 order-1" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
             <div class="content text-center">
-              <h1 class="typed" id="typed">Manage your Bussiness, faster.</h1>
-              <span class="typed-cursor" id="typed-cursor">|</span>
+              <h1 class="typed" id="typed">Manage your Biz, faster.</h1>
+              <span class="typed-cursor" id="typed-cursor" style="font-size: 50px; margin: 0 10px; color: #00a8ff;">|</span>
               <p>gain access to your business insights and progress from anywhere, anytime.</p>
               <a href="#pricing" style="background: #0A48B3;" class="btn text-white">Get started</a>
             </div>
@@ -167,7 +168,7 @@
               <div class="col-lg-6 col-md-8" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
                 <div class="content-img position-relative">
                   <div class="image-1">
-                    <img src="{% static 'productpage/image/l8/content-image-1.png' %}" alt="">
+                    <img src="{% static 'productpage/image/l8/landing-nav.png' %}" alt="">
                   </div>
                   <div class="image-2">
                     <img src="{% static 'productpage/image/l8/content-image-2.png' %}" alt="">
@@ -263,7 +264,7 @@
               <div class="main-price">
                 <div class="price d-flex position-relative ">
                   <span class="d-inline-block dynamic-value">$</span>
-                  <h2 class="d-inline-block dynamic-value" data-active="15" data-monthly="19" data-yearly="199"><span
+                  <h2 class="d-inline-block dynamic-value" data-active="15" data-monthly="9.99" data-yearly="99.9"><span
                   class="dynamic-value" data-active="/ month" data-monthly="/ month" data-yearly="/year"></span></h2>
                 </div>
               </div>
@@ -291,7 +292,7 @@
               <div class="main-price">
                 <div class="price d-flex position-relative">
                   <span class="d-inline-block dynamic-value ">$</span>
-                  <h2 class="d-inline-block dynamic-value" data-active="15" data-monthly="29" data-yearly="299"> <span
+                  <h2 class="d-inline-block dynamic-value" data-active="15" data-monthly="39.99" data-yearly="399.99"> <span
                   class="dynamic-value" data-active="/  month" data-monthly="/ month" data-yearly="/year"></span></h2>
                 </div>
               </div>
@@ -627,10 +628,12 @@
   <!-- Vendor Scripts -->
   <script src="{% static 'productpage/js/jquery-1.11.1.min.js' %}"></script>
   <script src="{% static 'productpage/js/vendor.min.js' %}"></script>
+  <script src="{% static 'productpage/js/bootstrap.min.js' %}"></script>
   <!-- Plugin's Scripts -->
   <script src="{% static 'productpage/plugins/fancybox/jquery.fancybox.min.js' %}"></script>
   <script src="{% static 'productpage/plugins/aos/aos.min.js' %}"></script>
   <script src="{% static 'productpage/plugins/menu/menu.js' %}"></script>
+  <script src="{% static 'productpage/js/typed.js' %}"></script>
   <script src="{% static 'productpage/js/typewriter.js' %}"></script>
   <!-- SweetAlert2 -->
   <script src="{% static 'accounts/plugins/sweetalert2/sweetalert2.min.js' %}"></script>

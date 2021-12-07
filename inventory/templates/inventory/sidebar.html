@@ -58,10 +58,14 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="#navbar-dashboards">
+                            <a class="nav-link active" href="{% url 'settings' %}">
                                 <i class="ni ni-settings-gear-65  text-primary"></i> <span class="nav-link-text">Settings</span>
                             </a>
-
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{% url 'notifications' %}">
+                                <i class="ni ni-notification-70  text-primary"></i> <span class="nav-link-text">Notifications</span>
+                            </a>
                         </li>
                     {% endif %}
 
