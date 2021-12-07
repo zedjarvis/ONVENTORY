@@ -22,8 +22,6 @@ class CreateUserForm(UserCreationForm):
                                            'placeholder': 'Password'}),
                                 required=True)
     password2 = forms.CharField(
-                                help_text="Password should be similar \
-                                    to first one",
                                 widget=forms.PasswordInput(
                                     attrs={'class': 'form-control',
                                            'placeholder': 'Confirm Password'}),
@@ -33,6 +31,30 @@ class CreateUserForm(UserCreationForm):
         model = get_user_model()
         fields = ['username', 'email', 'password1', 'password2']
 
+    def clean(self):
+        # Data from form is fetched using clean function
+        super(CreateUserForm, self).clean()
+
+        # Getting username
+        user_name = self.cleaned_data.get('username')
+        password_1 = self.cleaned_data.get('password1')
+        password_2 = self.cleaned_data.get('password2')
+
+        # check if username is less than 5 letters
+        if len(user_name) < 5:
+            self._errors['username'] = self.error_class([
+                "Username should be at least 5 characters long"
+            ])
+        # check if username has whitespace
+        if " " in user_name:
+            self._errors['username'] = self.error_class([
+                "Username should be one word"
+            ])
+        if password_2 != password_1:
+            self._errors['password2'] = self.error_class([
+                "password not similar to the first password"
+            ])
+
 
 class UserUpdateForm(UserChangeForm):
     email = forms.EmailField()
@@ -40,11 +62,6 @@ class UserUpdateForm(UserChangeForm):
     class Meta:
         model = get_user_model()
         fields = ['username', 'first_name', 'last_name', 'email']
-
-        widgets = {
-            'username': forms.TextInput(attrs={'type': 'text',
-                                               'class': 'form-control'})
-        }
 
 
 class ProfileUpdateForm(UserChangeForm):

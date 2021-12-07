@@ -6,6 +6,13 @@ from inventory.models import Employee, Item, Shop, Category
 from accounts.models import User
 import random
 
+# exporting data to csv, xls, pdf modules
+import csv
+import xlwt
+from weasyprint import HTML
+from django.core.files.storage import FileSystemStorage
+from django.template.loader import render_to_string
+
 
 # create user ajax view
 class CreateUser(View):
@@ -139,6 +146,7 @@ class CreateItem(View):
         return JsonResponse({'item': data})
 
 
+# Edit item class
 class EditItem(View):
     def post(self, request, id):
         shop_name = request.POST.get('shop')
@@ -200,3 +208,108 @@ def delete_item(request, id):
         return redirect('employee_view')
     else:
         return redirect('view')
+
+
+# Export items to CSV File format
+def export_items_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="all_items.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['ID', 'ITEM NAME',
+                     'DESCRIPTION', 'QUANTITY',
+                     'PURCHASE PRICE', 'ITEM PRICE',
+                     'VALUE', 'REORDER LEVEL', 'REORDER QUANTITY'])
+
+    # get above items from database
+    shop_items = []
+    items = []
+    # get all shops beloging to the user
+    # function will be changed to include shop name for specificity
+    shops = request.user.shops.all()
+    for shop in shops:
+        shop_items += shop.items.all()
+
+    for item in shop_items:
+        items.append([item.id, item.item_name, item.item_description,
+                      item.item_quantity,
+                      item.purchase_price, item.unit_price, item.value,
+                      item.reorder_level, item.reorder_quantity])
+
+    for item in items:
+        writer.writerow(item)
+
+    return response
+
+
+# Export items to Excel spread sheet format
+def export_items_xls(request):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="all_items.xls"'
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('Items')
+
+    # Sheet header first row
+    row_num = 0
+
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    columns = ['ITEM NAME',
+               'DESCRIPTION', 'QUANTITY',
+               'PURCHASE PRICE', 'ITEM PRICE',
+               'VALUE', 'REORDER LEVEL', 'REORDER QUANTITY']
+
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], font_style)
+
+    # Sheet body, remaining rows
+    font_style = xlwt.XFStyle()
+
+    # get above items from database
+    shop_items = []
+    items = []
+    # get all shops beloging to the user
+    # function will be changed to include shop name for specificity
+    shops = request.user.shops.all()
+    for shop in shops:
+        shop_items += shop.items.all()
+
+    for item in shop_items:
+        items.append([item.item_name, item.item_description,
+                      item.item_quantity,
+                      item.purchase_price, item.unit_price, item.value,
+                      item.reorder_level, item.reorder_quantity])
+
+    for row in items:
+        row_num += 1
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, row[col_num], font_style)
+
+    wb.save(response)
+    return response
+
+
+# Exporting Items to pdf
+# Using weasyprint to generate pdf from html template
+def export_items_pdf(request):
+    # Get all user item
+    items_object_list = []
+    shops = request.user.shops.all()
+    for shop in shops:
+        items_object_list += shop.items.all()
+
+    # passing items to html templates
+    html_string = render_to_string('crud/items_to_pdf_template.html',
+                                   {'items': items_object_list})
+    html = HTML(string=html_string)
+    html.write_pdf(target='/tmp/items_table.pdf')
+
+    fs = FileSystemStorage('/tmp')
+    with fs.open('items_table.pdf') as pdf:
+        response = HttpResponse(pdf, content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="items_table.pdf"'
+        return response
+
+    return response

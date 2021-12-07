@@ -12,4 +12,7 @@ urlpatterns = [
          mainView.delete_employee, name='delete_employee'),
     path('delete_item/<int:id>/', mainView.delete_item, name='delete_item'),
     path('edit_item/<int:id>/', mainView.EditItem.as_view(), name='edit_item'),
+    path('export/items_to_csv/', mainView.export_items_csv, name='to_csv'),
+    path('export/items_to_xls/', mainView.export_items_xls, name='to_xls'),
+    path('export/items_to_pdf/', mainView.export_items_pdf, name='to_pdf'),
 ]

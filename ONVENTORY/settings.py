@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 import os
+import socket
 from pathlib import Path
 import django_heroku
 
@@ -208,6 +209,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DEBUG_PROPAGATE_EXCEPTIONS = True
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+# SMTP Configuration
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+try:
+    EMAIL_HOST = socket.gethostbyname('smtp.gmail.com')
+except (Exception) as e:
+    print(str(e))
+    EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'onventory.admim@gmail.com'
+EMAIL_HOST_PASSWORD = 'Randomthread1*'
 
 # Configure Django App for Heroku.
 django_heroku.settings(locals())

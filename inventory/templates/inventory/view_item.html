@@ -1,6 +1,6 @@
 {% extends 'accounts/base.html' %}
 
-{% block title %} Dashboard | ONventory {% endblock %}
+{% block title %} View Items | ONventory {% endblock %}
 
 {% block content %}
 
@@ -36,8 +36,7 @@
                             </nav>
                         </div>
                         <div class="col-lg-6 col-5 text-right">
-                            <a href="#" class="btn btn-sm btn-neutral" style="margin-bottom: 5px" id="refresh">
-                                <i class="fa fa-plus"></i> Refresh</a>
+                            <a href="#" class="btn btn-sm btn-neutral" style="margin-bottom: 5px" id="refresh">Refresh</a>
                             {% if request.user.is_staff %}
                                 <a href="#" class="btn btn-sm btn-neutral" style="margin-bottom: 5px" data-toggle="modal" data-target="#modal-sm">
                                     <i class="fa fa-plus"></i> Add Shop</a>
@@ -46,7 +45,28 @@
                                 <i class="fa fa-plus"></i> Add Category</a>
                             <a href="#" class="btn btn-sm btn-neutral" style="margin-bottom: 5px" data-toggle="modal" data-target="#modal-xl">
                                 <i class="fa fa-plus"></i> Add Item</a>
-                            <button onclick="exportTableToExcel('complex-dt',filename='Items_table')" class="btn btn-sm btn-neutral" style="margin-bottom: 5px"><i class="fa fa-file-excel"></i> Export</button>
+                            <ul>
+                                <li class="nav-item dropdown">
+                                    <a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-sm btn-neutral" style="margin-bottom: 5px">
+                                        <i class="fa fa-file-excel"></i> Export
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-dark bg-default dropdown-menu-right">
+                                        <div class="row shortcuts px-4">
+                                            <a href="{% url 'to_xls' %}" class="col-4 shortcut-item"><span class="shortcut-media avatar rounded-circle bg-gradient-green"><i
+                                                        class="fa fa-file-excel"></i> </span><small>Excel</small>
+                                            </a>
+                                            <a href="{% url 'to_csv' %}" class="col-4 shortcut-item"><span
+                                                    class="shortcut-media avatar rounded-circle bg-gradient-info"><i class="fa fa-file-csv"></i>
+                                                </span><small>CSV</small>
+                                            </a>
+                                            <a href="{% url 'to_pdf' %}" class="col-4 shortcut-item"><span class="shortcut-media avatar rounded-circle bg-gradient-red"><i
+                                                        class="fa fa-file-pdf"></i> </span><small>PDF</small>
+                                            </a>
+
+                                        </div>
+                                </li>
+                            </ul>
+
                         </div>
                     </div>
                 </div>
@@ -112,6 +132,7 @@
                                                 <td>
                                                     <a href="#!" data-toggle="modal" data-target="#editItemModal{{item.id}}"><i class="fa fa-edit text-green"></i></a>
                                                     <a href="#!" data-toggle="modal" data-target="#deleteItemModal{{item.id}}"><i class="fa fa-trash text-danger"></i></a>
+                                                    <a href="#"><i class="fa fa-eye text-info"></i></a>
                                                 </td>
                                             </tr>
 
@@ -137,7 +158,7 @@
                                                 </div>
                                             </div>
 
-                                            <!-- ADIT ITEM MODAL -->
+                                            <!-- EDIT ITEM MODAL -->
                                             <div class="modal fade" id="editItemModal{{item.id}}">
                                                 <div class="modal-dialog modal-xl">
                                                     <form id="item-edit-form" method="POST" action="{% url 'edit_item' item.id %}">
@@ -321,11 +342,8 @@
 
 
                 </script>
-                <!-- /.modal-content -->
             </div>
-            <!-- /.modal-dialog -->
         </div>
-        <!-- /.modal -->
 
                 <!-- ADD CATEGORY MODAL-->
                 <div class="modal fade" id="modal-lg">
@@ -418,11 +436,8 @@
                                 </div>
                             </div>
                         </form>
-                        <!-- /.modal-content -->
                     </div>
-                    <!-- /.modal-dialog -->
                 </div>
-                <!-- /.modal -->
 
 
 
@@ -614,7 +629,7 @@
                                                     ${item.shop}
                                                 </td>
                                                 <td>
-                                                    <a href=""><i class="fa fa-edit text-green"></i></a>
+                                                    <a href="#!" data-toggle="modal" data-target="#editItemModal${item.id}"><i class="fa fa-edit text-green"></i></a>
                                                     <a href="#!" data-toggle="modal" data-target="#deleteItemModal${item.id}"><i class="fa fa-trash text-danger"></i></a>
                                                 </td>
                                             </tr>
@@ -626,38 +641,6 @@
                         form.reset()
 
                     }
-
-                    // Export data to excel
-                    function exportTableToExcel(tableID, filename = '') {
-                            var downloadLink;
-                            var dataType = 'application/vnd.ms-excel';
-                            var tableSelect = document.getElementById(tableID);
-                            var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
-
-                            // Specify file name
-                            filename = filename ? filename + '.xls' : 'excel_data.xls';
-
-                            // Create download link element
-                            downloadLink = document.createElement("a");
-
-                            document.body.appendChild(downloadLink);
-
-                            if (navigator.msSaveOrOpenBlob) {
-                                var blob = new Blob(['\ufeff', tableHTML], {
-                                    type: dataType
-                                });
-                                navigator.msSaveOrOpenBlob(blob, filename);
-                            } else {
-                                // Create a link to the file
-                                downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
-
-                                // Setting the file name
-                                downloadLink.download = filename;
-
-                                //triggering the function
-                                downloadLink.click();
-                            }
-                        }
                 </script>
 
 {% endblock content %}

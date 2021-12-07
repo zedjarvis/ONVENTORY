@@ -219,11 +219,8 @@ body[data-theme='light'] .dark-mode-texts .light-shape.default-shape, .light-mod
 	margin: 0;
 }
 
-.typed-cursor {
-	font-size: 60px;
-	display: block;
-	margin: 0 10px;
-	color: #00a8ff;
+#typed-cursor {
+  display: inline-block;
 	-webkit-animation-name: flash;
 	animation-name: flash;
 	-webkit-animation-duration: 1s;
@@ -231,6 +228,7 @@ body[data-theme='light'] .dark-mode-texts .light-shape.default-shape, .light-mod
 	-webkit-animation-iteration-count: infinite;
 	animation-iteration-count: infinite;
 }
+
 .site-navbar {
   display: flex;
   position: relative;
@@ -241,7 +239,7 @@ body[data-theme='light'] .dark-mode-texts .light-shape.default-shape, .light-mod
 }
 
 @media(max-width: 400px) {
-	.typed-cursor {
+	#typed-cursor {
 		display: none;
 	}
 }
@@ -820,6 +818,9 @@ body[data-theme='light'] .dark-mode-texts .light-shape.default-shape, .light-mod
     align-items: center;
     justify-content: center;
   }
+  .hero-area-l-17 .typed-cursor {
+    display: none;
+  }
   .site-header .mobile-menu-trigger span {
     display: block;
     height: 2px;
@@ -1159,7 +1160,7 @@ li.sub-menu--item.nav-item-has-children i {
   border-color: #f8f9fa;
 }
 .btn-light:hover {
-  color: #000;
+  color: #0A48B3;
   background-color: #f9fafb;
   border-color: #f9fafb;
 }

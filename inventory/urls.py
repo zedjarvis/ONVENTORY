@@ -11,4 +11,6 @@ urlpatterns = [
          mainView.employee_item_view, name='employee_view'),
     path('sell_items/', views.handler404, name='sell'),
     path('add_user/', mainView.add_user, name='users'),
+    path('notifications/', mainView.notification_view, name='notifications'),
+    path('settings/', mainView.settings_view, name='settings'),
 ]

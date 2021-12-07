@@ -1,3 +1,6 @@
+# -*- encoding: utf-8 -*-
+
+
 from django.shortcuts import redirect, render
 from .models import Shop
 from django.contrib.auth.decorators import login_required
@@ -80,3 +83,13 @@ def add_user(request):
                'shops': shops}
 
     return render(request, 'inventory/add_user.html', context)
+
+
+# notifications page
+def notification_view(request):
+    return render(request, 'inventory/notifications.html', {})
+
+
+# settings page
+def settings_view(request):
+    return render(request, 'inventory/settings.html', {})
