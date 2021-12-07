@@ -33,7 +33,7 @@ urlpatterns = [
     path('', include('productpage.urls')),
     path('accounts/', include('accounts.urls')),
     path('inventory/', include('inventory.urls')),
-    path('crud_rest_framework', include('crud.urls')),
+    path('crud_rest_framework/', include('crud.urls')),
 ]
 
 
